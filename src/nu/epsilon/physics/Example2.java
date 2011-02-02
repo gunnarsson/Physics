@@ -1,7 +1,7 @@
 package nu.epsilon.physics;
 
 import org.anddev.andengine.entity.scene.Scene;
-import org.anddev.andengine.entity.sprite.TiledSprite;
+import org.anddev.andengine.entity.shape.IShape;
 import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
 import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
 import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
@@ -31,7 +31,10 @@ public class Example2 extends Example1 implements IAccelerometerListener {
 		Scene scene = super.onLoadScene();
 		this.physicsWorld = new PhysicsWorld(new Vector2(0, 2 * SensorManager.GRAVITY_EARTH), false);
 
-		for (TiledSprite sprite : sprites) {
+		int count = scene.getTopLayer().getEntityCount();
+		for (int i = 0; i < count; i++) {
+			IShape sprite = (IShape) scene.getTopLayer().getEntity(i);
+			
 			Body body = PhysicsFactory.createBoxBody(physicsWorld, sprite, BodyType.DynamicBody, fixtureDefinition);
 			sprite.setUpdatePhysics(false);
 			this.physicsWorld.registerPhysicsConnector(new PhysicsConnector(sprite, body, true, true, false, false));
