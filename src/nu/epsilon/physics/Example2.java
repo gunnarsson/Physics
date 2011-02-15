@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
-public class Example2 extends Example1 implements IAccelerometerListener {
+public class Example2 extends Example1  {
 
 	protected PhysicsWorld physicsWorld;
 	protected FixtureDef fixtureDefinition = PhysicsFactory.createFixtureDef(10, 0.5f, 0.5f);
@@ -23,7 +23,6 @@ public class Example2 extends Example1 implements IAccelerometerListener {
 	@Override
 	public void onLoadResources() {
 		super.onLoadResources();
-		this.enableAccelerometerSensor(this);
 	}
 
 	@Override
@@ -44,9 +43,5 @@ public class Example2 extends Example1 implements IAccelerometerListener {
 		return scene;
 	}
 
-	@Override
-	public void onAccelerometerChanged(final AccelerometerData pAccelerometerData) {
-		this.physicsWorld.setGravity(new Vector2(4 * pAccelerometerData.getY(), 4 * pAccelerometerData.getX()));
-	}
 
 }

@@ -57,7 +57,7 @@ public class PerformanceDemo extends BaseGameActivity implements
 	private int objectCounter;
 
 	private FPSCounter fpsCounter = new FPSCounter();
-	
+
 	@Override
 	public Engine onLoadEngine() {
 
@@ -139,9 +139,8 @@ public class PerformanceDemo extends BaseGameActivity implements
 		return scene;
 	}
 
-	private void add(final TouchEvent pSceneTouchEvent) {
-		Sprite sprite = new Sprite(pSceneTouchEvent.getX(), pSceneTouchEvent
-				.getY(), this.tileRegions.clone());
+	private void add(final int x, final int y) {
+		Sprite sprite = new Sprite(x, y, this.tileRegions.clone());
 		sprite.setRotation((float) (Math.random() * Math.PI));
 		sprite.setUpdatePhysics(false);
 		Scene scene = mEngine.getScene();
@@ -162,9 +161,19 @@ public class PerformanceDemo extends BaseGameActivity implements
 					@Override
 					public void run() {
 
-						add(pSceneTouchEvent);
-						objectCounter++;
-						if(objectCounter %25 == 0) {
+						add((int) pSceneTouchEvent.getX(),
+								(int) pSceneTouchEvent.getY());
+						add((int) pSceneTouchEvent.getX() - 5,
+								(int) pSceneTouchEvent.getY() - 5);
+						add((int) pSceneTouchEvent.getX() + 5,
+								(int) pSceneTouchEvent.getY() + 5);
+						add((int) pSceneTouchEvent.getX() - 5,
+								(int) pSceneTouchEvent.getY() + 5);
+						add((int) pSceneTouchEvent.getX() + 5,
+								(int) pSceneTouchEvent.getY() - 5);
+
+						objectCounter+=5;
+						if (objectCounter % 25 == 0) {
 							fpsCounter.reset();
 						}
 					}
