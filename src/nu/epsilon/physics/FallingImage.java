@@ -40,7 +40,7 @@ public class FallingImage extends BaseGameActivity implements
 	protected static final int CAMERA_WIDTH = 480 * 2;
 	protected static final int CAMERA_HEIGHT = 320 * 2;
 
-	private static final int BLOCKS = 16;
+	private static final int BLOCKS = 10;
 	private static final int BLOCK_WIDTH = 256 / BLOCKS;
 
 	private Texture texture;
@@ -74,7 +74,7 @@ public class FallingImage extends BaseGameActivity implements
 	@Override
 	public Scene onLoadScene() {
 
-		final Scene scene = new Scene(2);
+		final Scene scene = new Scene(1);
 		scene.setBackground(new ColorBackground(0, 0, 0));
 		scene.setOnSceneTouchListener(this);
 
@@ -82,7 +82,7 @@ public class FallingImage extends BaseGameActivity implements
 		for (int i = 0; i < BLOCKS; i++) {
 			for (int j = 0; j < BLOCKS; j++) {
 				TiledSprite sprite = new TiledSprite(
-						90 + i * (BLOCK_WIDTH),
+						200 + i * (BLOCK_WIDTH),
 						-50 + j * (BLOCK_WIDTH), this.tileRegions.clone());
 				sprite.setCurrentTileIndex(i + (j * BLOCKS));
 				scene.getTopLayer().addEntity(sprite);
@@ -90,7 +90,7 @@ public class FallingImage extends BaseGameActivity implements
 		}
 
 		this.physicsWorld = new PhysicsWorld(new Vector2(0,
-				2 * SensorManager.GRAVITY_EARTH), false, 5, 5);
+				2 * SensorManager.GRAVITY_EARTH), false, 2, 3);
 
 		int count = scene.getTopLayer().getEntityCount();
 		for (int i = 0; i < count; i++) {

@@ -42,6 +42,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
+// 0418 18370
+
 public class AngryNerds extends BaseGameActivity implements
 		IOnSceneTouchListener {
 
@@ -76,8 +78,7 @@ public class AngryNerds extends BaseGameActivity implements
 
 	private TextureRegion backgroundRegion;
 
-	private Body destroyer;
-	// private Body bossBody;
+	private Body can;
 	private boolean initiated = false;
 	private int shootCount = 3;
 	private int hitCount = 0;
@@ -92,7 +93,6 @@ public class AngryNerds extends BaseGameActivity implements
 	private int startX;
 	private int startY;
 
-	private Sprite bossSprite;
 
 	private final Map<Body, Sprite> bosses = new HashMap<Body, Sprite>();
 
@@ -199,7 +199,7 @@ public class AngryNerds extends BaseGameActivity implements
 		float TRANSLATE1 = 600;
 		float TRANSLATE2 = TRANSLATE1 + HEIGHT - WIDTH;
 		float WPH = WIDTH + HEIGHT;
-		float WMH = WIDTH - HEIGHT;
+		float HMW = HEIGHT - WIDTH;
 		float floor1 = GROUND - HEIGHT;
 		float floor2 = floor1 - WPH;
 		float floor3 = floor2 - WPH;
@@ -209,27 +209,27 @@ public class AngryNerds extends BaseGameActivity implements
 		// 1 floor
 		add(scene, stoneRegion, TRANSLATE1, floor1, 0);
 		add(scene, stoneRegion, TRANSLATE2, floor1, 0);
-		add(scene, woodRegion, TRANSLATE1 + WMH / 2f, floor1 - WPH / 2f, -90f);
+		add(scene, woodRegion, TRANSLATE1 + HMW / 2f, floor1 - WPH / 2f, -90f);
 
 		// 2 floor
 		add(scene, stoneRegion, TRANSLATE1, floor2, 0);
 		add(scene, stoneRegion, TRANSLATE2, floor2, 0);
-		add(scene, woodRegion, TRANSLATE1 + WMH / 2f, floor2 - WPH / 2f, -90);
+		add(scene, woodRegion, TRANSLATE1 + HMW / 2f, floor2 - WPH / 2f, -90);
 
 		// 3 floor
 		add(scene, stoneRegion, TRANSLATE1, floor3, 0);
 		add(scene, stoneRegion, TRANSLATE2, floor3, 0);
-		add(scene, woodRegion, TRANSLATE1 + WMH / 2f, floor3 - WPH / 2f, -90);
+		add(scene, woodRegion, TRANSLATE1 + HMW / 2f, floor3 - WPH / 2f, -90);
 
 		// 4 floor
 		add(scene, stoneRegion, TRANSLATE1, floor4, 0);
 		add(scene, stoneRegion, TRANSLATE2, floor4, 0);
-		add(scene, woodRegion, TRANSLATE1 + WMH / 2f, floor4 - WPH / 2f, -90);
+		add(scene, woodRegion, TRANSLATE1 + HMW / 2f, floor4 - WPH / 2f, -90);
 
 		// 5 floor
 		add(scene, stoneRegion, TRANSLATE1, floor5, 0);
 		add(scene, stoneRegion, TRANSLATE2, floor5, 0);
-		add(scene, woodRegion, TRANSLATE1 + WMH / 2f, floor5 - WPH / 2f, -90);
+		add(scene, woodRegion, TRANSLATE1 + HMW / 2f, floor5 - WPH / 2f, -90);
 
 		add(scene, groundRegion, -512, CAMERA_HEIGHT - 43, 0,
 				BodyType.StaticBody);
@@ -244,7 +244,7 @@ public class AngryNerds extends BaseGameActivity implements
 		add(scene, bossRegion, TRANSLATE1 + 20, floor1, 0);
 
 		// add jolt cola to throw at the bosses
-		destroyer = add(scene, joltRegion, 50, 300, 0);
+		can = add(scene, joltRegion, 50, 300, 0);
 
 		return scene;
 	}
@@ -259,10 +259,9 @@ public class AngryNerds extends BaseGameActivity implements
 
 				for (final Body bossBody : bosses.keySet()) {
 
-					Fixture destroyerFixture = bossBody.getFixtureList().get(0);
+					Fixture boss = bossBody.getFixtureList().get(0);
 
-					if (fixtureA == destroyerFixture
-							|| fixtureB == destroyerFixture) {
+					if (fixtureA == boss || fixtureB == boss) {
 
 						hitCount++;
 						if (hitCount == 10) {
@@ -293,13 +292,13 @@ public class AngryNerds extends BaseGameActivity implements
 
 	@Override
 	public boolean onSceneTouchEvent(final Scene pScene,
-			final TouchEvent pSceneTouchEvent) {
+			final TouchEvent touchEvent) {
 		if (shootCount < 0) {
 			return false;
 		}
 		if (this.physicsWorld != null && !initiated) {
 			initiated = true;
-			if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
+			if (touchEvent.getAction() == MotionEvent.ACTION_DOWN) {
 				this.runOnUpdateThread(new Runnable() {
 					@Override
 					public void run() {
@@ -313,27 +312,26 @@ public class AngryNerds extends BaseGameActivity implements
 			}
 		}
 
-		else if (pSceneTouchEvent.getX() < 70 && pSceneTouchEvent.getY() > 360
+		else if (touchEvent.getX() < 70 && touchEvent.getY() > 360
 				&& shootCount > 0) {
-			int action = pSceneTouchEvent.getAction();
+			int action = touchEvent.getAction();
 			if (action == TouchEvent.ACTION_DOWN) {
-				startX = (int) pSceneTouchEvent.getMotionEvent().getX();
-				startY = (int) pSceneTouchEvent.getMotionEvent().getY();
+				startX = (int) touchEvent.getMotionEvent().getX();
+				startY = (int) touchEvent.getMotionEvent().getY();
 				return true;
 			} else if (action == TouchEvent.ACTION_UP) {
-				float xDiff = (int) (startX - pSceneTouchEvent.getMotionEvent()
+				float xDiff = (int) (startX - touchEvent.getMotionEvent()
 						.getX());
-				float yDiff = (int) (startY - pSceneTouchEvent.getMotionEvent()
+				float yDiff = (int) (startY - touchEvent.getMotionEvent()
 						.getY());
-				destroyer.applyLinearImpulse(new Vector2(2 * xDiff, yDiff),
-						new Vector2(destroyer.getPosition().x, destroyer
-								.getPosition().y));
+				can.applyLinearImpulse(new Vector2(2 * xDiff, yDiff),
+						new Vector2(can.getPosition().x, can.getPosition().y));
 				if (shootCount > 1) {
 					this.runOnUpdateThread(new Runnable() {
 
 						@Override
 						public void run() {
-							destroyer = add(pScene, joltRegion, 50, 300, 0);
+							can = add(pScene, joltRegion, 50, 300, 0);
 							shootCount--;
 						}
 					});
