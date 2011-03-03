@@ -33,17 +33,17 @@ public class Example0 extends BaseGameActivity {
 
 	@Override
 	public void onLoadResources() {
-		this.texture = new Texture(256, 256, TextureOptions.BILINEAR);
+		this.texture = new Texture(512, 128, TextureOptions.BILINEAR);
 		region = TextureRegionFactory.createFromAsset(this.texture, this,
-				"gfx/hero_flying.png", 0, 0);
+				"gfx/codemotion.png", 0, 0);
 		this.mEngine.getTextureManager().loadTexture(this.texture);
 	}
 
 	@Override
 	public Scene onLoadScene() {
 		final Scene scene = new Scene(2);
-		scene.setBackground(new ColorBackground(0, 0, 0));
-		Sprite sprite = new Sprite(100, 25, this.region.clone());
+		scene.setBackground(new ColorBackground(1, 1, 1));
+		Sprite sprite = new Sprite(90, 105, this.region.clone());
 		scene.getTopLayer().addEntity(sprite);
 		return scene;
 	}
