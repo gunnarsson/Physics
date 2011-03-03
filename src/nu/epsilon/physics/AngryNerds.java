@@ -2,7 +2,6 @@ package nu.epsilon.physics;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
@@ -12,10 +11,7 @@ import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolic
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.scene.background.RepeatingSpriteBackground;
-import org.anddev.andengine.entity.scene.background.SpriteBackground;
 import org.anddev.andengine.entity.sprite.Sprite;
-import org.anddev.andengine.entity.sprite.TiledSprite;
-import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
 import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
@@ -26,12 +22,9 @@ import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.source.AssetTextureSource;
-import org.anddev.andengine.sensor.accelerometer.AccelerometerData;
-import org.anddev.andengine.sensor.accelerometer.IAccelerometerListener;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 import android.hardware.SensorManager;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.badlogic.gdx.math.Vector2;
@@ -183,11 +176,11 @@ public class AngryNerds extends BaseGameActivity implements
 		// register to be notified of touch events
 		scene.setOnSceneTouchListener(this);
 
-		// this.physicsWorld = new FixedStepPhysicsWorld(120, new Vector2(0,
-		// 2 * SensorManager.GRAVITY_EARTH), true, 3, 2);
-
-		this.physicsWorld = new PhysicsWorld(new Vector2(0,
+		this.physicsWorld = new FixedStepPhysicsWorld(120, new Vector2(0,
 				2 * SensorManager.GRAVITY_EARTH), true, 3, 2);
+
+//		this.physicsWorld = new PhysicsWorld(new Vector2(0,
+//				2 * SensorManager.GRAVITY_EARTH), true, 3, 2);
 
 		// Add listener to be notified about collisions.
 		this.physicsWorld.setContactListener(getContactListener(scene));
@@ -312,7 +305,7 @@ public class AngryNerds extends BaseGameActivity implements
 			}
 		}
 
-		else if (touchEvent.getX() < 70 && touchEvent.getY() > 360
+		else if (touchEvent.getX() < 170 && touchEvent.getY() > 300
 				&& shootCount > 0) {
 			int action = touchEvent.getAction();
 			if (action == TouchEvent.ACTION_DOWN) {

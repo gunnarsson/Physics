@@ -33,7 +33,7 @@ public class Example1 extends BaseGameActivity {
 	@Override
 	public void onLoadResources() {
 		this.texture = new Texture(256, 32, TextureOptions.BILINEAR);
-		this.tileRegions = TextureRegionFactory.createTiledFromAsset(this.texture, this, "gfx/jfokus.png", 0, 0, BLOCKS, 1);
+		this.tileRegions = TextureRegionFactory.createTiledFromAsset(this.texture, this, "gfx/jfokus.png", 0, 0, BLOCKS+1, 1);
 		this.mEngine.getTextureManager().loadTexture(this.texture);
 	}
 

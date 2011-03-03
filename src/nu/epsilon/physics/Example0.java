@@ -43,8 +43,7 @@ public class Example0 extends BaseGameActivity {
 	public Scene onLoadScene() {
 		final Scene scene = new Scene(2);
 		scene.setBackground(new ColorBackground(0, 0, 0));
-
-		Sprite sprite = new Sprite(100, 100, this.region.clone());
+		Sprite sprite = new Sprite(100, 25, this.region.clone());
 		scene.getTopLayer().addEntity(sprite);
 		return scene;
 	}
