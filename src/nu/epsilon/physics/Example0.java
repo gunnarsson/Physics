@@ -15,30 +15,27 @@ import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 public class Example0 extends BaseGameActivity {
-
+	
 	protected static final int CAMERA_WIDTH = 480;
 	protected static final int CAMERA_HEIGHT = 320;
-
+	
 	private Texture texture;
 	private TextureRegion region;
-
+	
 	@Override
 	public Engine onLoadEngine() {
 		final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-		final RatioResolutionPolicy ratio = new RatioResolutionPolicy(
-				CAMERA_WIDTH, CAMERA_HEIGHT);
-		return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
-				ratio, camera));
+		final RatioResolutionPolicy ratio = new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT);
+		return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE, ratio, camera));
 	}
-
+	
 	@Override
 	public void onLoadResources() {
 		this.texture = new Texture(512, 128, TextureOptions.BILINEAR);
-		region = TextureRegionFactory.createFromAsset(this.texture, this,
-				"gfx/codemotion.png", 0, 0);
+		region = TextureRegionFactory.createFromAsset(this.texture, this, "gfx/sdc.png", 0, 0);
 		this.mEngine.getTextureManager().loadTexture(this.texture);
 	}
-
+	
 	@Override
 	public Scene onLoadScene() {
 		final Scene scene = new Scene(2);
@@ -47,10 +44,10 @@ public class Example0 extends BaseGameActivity {
 		scene.getTopLayer().addEntity(sprite);
 		return scene;
 	}
-
+	
 	@Override
 	public void onLoadComplete() {
-
+		
 	}
-
+	
 }
